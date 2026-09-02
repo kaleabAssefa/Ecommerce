@@ -1,6 +1,7 @@
 package com.example.ecommerce.service;
 
 import com.example.ecommerce.entity.Product;
+import com.example.ecommerce.exception.ResourceNotFoundException;
 import com.example.ecommerce.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,7 +41,7 @@ public class ProductService {
 
     public Product updateProduct(Long id, Product updatedProduct) {
         Product existing = productRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Product not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found with id: " + id));
 
         existing.setName(updatedProduct.getName());
         existing.setDescription(updatedProduct.getDescription());

@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
+import com.example.ecommerce.exception.InsufficientStockException;
+import com.example.ecommerce.exception.ResourceNotFoundException;
 
 @Service
 public class CartService {
@@ -92,7 +94,7 @@ public class CartService {
 
     private void validateStock(Product product, int requestedQuantity) {
         if (requestedQuantity > product.getStockQuantity()) {
-            throw new RuntimeException("Requested quantity (" + requestedQuantity +
+            throw new InsufficientStockException("Requested quantity (" + requestedQuantity +
                     ") exceeds available stock (" + product.getStockQuantity() + ") for product: " + product.getName());
         }
     }

@@ -6,6 +6,8 @@ import com.example.ecommerce.entity.Customer;
 import com.example.ecommerce.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.example.ecommerce.exception.DuplicateResourceException;
+import com.example.ecommerce.exception.ResourceNotFoundException;
 
 @Service
 public class CustomerService {
@@ -19,7 +21,7 @@ public class CustomerService {
 
     public CustomerResponse register(CustomerRegistrationRequest request) {
         if (customerRepository.existsByEmail(request.getEmail())) {
-            throw new RuntimeException("Email already registered: " + request.getEmail());
+            throw new DuplicateResourceException("Email already registered: " + request.getEmail());
         }
 
         Customer customer = new Customer(

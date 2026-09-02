@@ -13,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
+import com.example.ecommerce.exception.InsufficientStockException;
+import com.example.ecommerce.exception.ResourceNotFoundException;
 
 @Service
 public class OrderService {
@@ -45,7 +47,7 @@ public class OrderService {
             Product product = cartItem.getProduct();
 
             if (cartItem.getQuantity() > product.getStockQuantity()) {
-                throw new RuntimeException("Insufficient stock for product: " + product.getName());
+                throw new InsufficientStockException("Insufficient stock for product: " + product.getName());
             }
 
             OrderItem orderItem = new OrderItem(product, cartItem.getQuantity(), product.getPrice());
